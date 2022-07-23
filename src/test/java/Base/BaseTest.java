@@ -1,10 +1,10 @@
 package Base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import Factory.BrowserFactory;
+import Factory.DriverFactory;
+import Utilities.LoadConfig;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
@@ -12,9 +12,12 @@ public class BaseTest {
 
     @BeforeMethod
      public void loginSetup(){
-        WebDriverManager.chromedriver().setup();
-         driver = new ChromeDriver();
+        DriverFactory.setDriver(BrowserFactory.getBrowser(LoadConfig.FRAMEWORK_PROPERTIES.getProperty("BROWSER-NAME" )));
+        DriverFactory.getDriver();
     }
-
+    @AfterTest
+    public void cleanup(){
+        DriverFactory.cleanup();
+    }
 
 }

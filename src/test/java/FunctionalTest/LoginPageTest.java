@@ -1,8 +1,9 @@
 package FunctionalTest;
 
 import Base.BaseTest;
+import Factory.DriverFactory;
 import PageObjects.LoginPage;
-import org.openqa.selenium.By;
+import Utilities.LoadConfig;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseTest {
@@ -10,18 +11,14 @@ public class LoginPageTest extends BaseTest {
 @Test
    private void shouldBeAbleToLoginWithValidUserNameAndPassword()  {
 
-
-    driver.get("https://www.docusign.com/");
-    driver.manage().window().maximize();
-    LoginPage login=new LoginPage(driver);
+    DriverFactory.getDriver().get(LoadConfig.FRAMEWORK_PROPERTIES.getProperty("BASEURL"));
+    DriverFactory.getDriver().manage().window().maximize();
+    LoginPage login=new LoginPage(DriverFactory.getDriver());
     login.clickLoginLink();
-    login.enterMailId("taruna.cotti@gmail.com");
+    login.enterMailId(LoadConfig.ENVIRONMENT_PROPERTIES.getProperty("emailID"));
     login.clickOnNext();
-    login.enterPassword("TestPractice@2");
+    login.enterPassword(LoadConfig.ENVIRONMENT_PROPERTIES.getProperty("password"));
     login.clickOnNext();
-   // String loginVerification=driver.findElement(By.xpath("//button[@data-qa='header-HOME-tab-button']")).getText();
-    //System.out.println(loginVerification);
-
     
 }
 
